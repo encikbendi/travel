@@ -1,191 +1,106 @@
 import { DatePicker } from "@heroui/date-picker";
+import { useState } from "react";
+import { Button } from "@heroui/button";
+import { addToast } from "@heroui/toast";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from "@heroui/table";
-import { Input } from "@heroui/input";
-import { useRef, useState } from "react";
-import { LinkIcon } from "@heroui/link";
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+} from "@heroui/modal";
 
 import DefaultLayout from "@/layouts/default";
+import { Schedule, schedulesData } from "@/data/schedules";
+import { Package, packagesData } from "@/data/packages";
+import ScheduleTable from "@/components/schedule-table";
 
 export default function SchedulePage() {
-  const [data, setData] = useState<any[]>([
-    {
-      date: new Date("2023-03-15").toDateString(),
-      event: "Conference",
-      place: "New York",
-      placeLink: "https://example.com/conference",
-      remarks: "Annual tech conference",
-    },
-    {
-      date: new Date("2023-03-16").toDateString(),
-      event: "Workshop",
-      place: "San Francisco",
-      placeLink: "https://example.com/workshop",
-      remarks: "Hands-on workshop",
-    },
-    {
-      date: new Date("2023-03-17").toDateString(),
-      event: "Keynote",
-      place: "Los Angeles",
-      remarks: "Opening keynote speech",
-    },
-  ]);
+  const [data, setData] = useState<Schedule[]>(schedulesData);
+  const [newTemplateStart, setNewTemplateStart] = useState<Date | null>(null);
 
-  const [newEntry, setNewEntry] = useState({
-    date: "",
-    event: "",
-    place: "",
-    placeLink: "",
-    remarks: "",
-  });
-  const datePickerRef = useRef<HTMLDivElement>(null);
-  const eventRef = useRef<HTMLInputElement>(null);
-  const placeRef = useRef<HTMLInputElement>(null);
-  const placeLinkRef = useRef<HTMLInputElement>(null);
-  const remarksRef = useRef<HTMLInputElement>(null);
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  function handleEnter() {
-    if (newEntry.date && newEntry.event && newEntry.place) {
-      setData((prev) =>
-        [...prev, newEntry].sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-        ),
-      );
-      setNewEntry({
-        date: "",
-        event: "",
-        place: "",
-        placeLink: "",
-        remarks: "",
+  function addTemplate(pkg: Package) {
+    if (newTemplateStart === null) {
+      return addToast({
+        title: "Invalid date range",
+        description: "Please select a valid start and end date.",
+        color: "danger",
       });
     }
+
+    const dateRange: {
+      startDate: Date;
+      endDate: Date;
+    } = {
+      startDate: new Date(newTemplateStart),
+      endDate: new Date(
+        new Date(newTemplateStart).getTime() +
+          pkg.numberOfDays * 24 * 60 * 60 * 1000,
+      ),
+    };
+
+    setData((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        packageId: pkg.id,
+        title: pkg.title,
+        description: pkg.description,
+        price: pkg.price,
+        place: pkg.place,
+        numberOfDays: pkg.numberOfDays,
+        startDate: dateRange.startDate.toLocaleDateString(),
+        endDate: dateRange.endDate.toLocaleDateString(),
+        schedule: pkg.template,
+      },
+    ]);
+
+    onClose();
   }
 
   return (
     <DefaultLayout>
-      <Table className="w-full">
-        <TableHeader>
-          <TableColumn>Date</TableColumn>
-          <TableColumn>Event</TableColumn>
-          <TableColumn>Location</TableColumn>
-          <TableColumn>Remarks</TableColumn>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <DatePicker
-                ref={datePickerRef}
-                granularity="minute"
-                label="Select Date"
-                onChange={(v) =>
-                  setNewEntry({
-                    ...newEntry,
-                    date: v ? new Date(v).toDateString() : "",
-                  })
-                }
-                onKeyDown={(e) => {
-                  if (e.key === "Tab") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    eventRef.current?.focus();
-                  }
-                }}
-              />
-            </TableCell>
-            <TableCell>
-              <Input
-                ref={eventRef}
-                id="event-input"
-                value={newEntry.event}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, event: e.target.value })
-                }
-                onKeyDown={(e) => {
-                  if (e.key === "Tab") {
-                    e.preventDefault();
-                    placeRef.current?.focus();
-                  }
-                }}
-              />
-            </TableCell>
-            <TableCell>
-              <div className="flex gap-1 items-center">
-                <Input
-                  ref={placeRef}
-                  id="place-input"
-                  placeholder="Where to?"
-                  value={newEntry.place}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, place: e.target.value })
-                  }
-                  onKeyDown={(e) => {
-                    if (e.key === "Tab") {
-                      e.preventDefault();
-                      remarksRef.current?.focus();
-                    }
-                  }}
-                />
+      <div className="mb-4 justify-between items-end flex">
+        <h1 className="mb-2 text-2xl font-bold">Schedules</h1>
+        <Button variant="bordered" onPress={onOpen}>
+          + New
+        </Button>
+      </div>
 
-                <Input
-                  ref={placeLinkRef}
-                  id="place-link-input"
-                  placeholder="Link to location"
-                  value={newEntry.placeLink}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, placeLink: e.target.value })
-                  }
-                />
-              </div>
-            </TableCell>
-            <TableCell>
-              <Input
-                ref={remarksRef}
-                id="remarks-input"
-                placeholder="What should they know?"
-                value={newEntry.remarks}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, remarks: e.target.value })
-                }
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleEnter();
-                  }
-                }}
-              />
-            </TableCell>
-          </TableRow>
-
-          <>
-            {data.map((item) => (
-              <TableRow key={`${item.date}-${item.event}`}>
-                <TableCell>{item.date}</TableCell>
-                <TableCell>{item.event}</TableCell>
-                <TableCell className="flex justify-between">
-                  {item.place}
-                  {item.placeLink ? (
-                    <a
-                      href={item.placeLink}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <LinkIcon />
-                    </a>
-                  ) : (
-                    <div />
-                  )}
-                </TableCell>
-                <TableCell>{item.remarks}</TableCell>
-              </TableRow>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          <ModalHeader>Select Package</ModalHeader>
+          <ModalBody>
+            <DatePicker
+              granularity="day"
+              label="Start Date"
+              onChange={(v) => setNewTemplateStart(v)}
+            />
+            {packagesData.map((pkg) => (
+              <Button
+                key={pkg.id}
+                className="mb-2"
+                variant="flat"
+                onPress={() => addTemplate(pkg)}
+              >
+                {pkg.title} ({pkg.numberOfDays} days)
+              </Button>
             ))}
-          </>
-        </TableBody>
-      </Table>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <>
+        {data.map((item) => (
+          <ScheduleTable
+            key={item.id}
+            data={data}
+            item={item}
+            setData={setData}
+          />
+        ))}
+      </>
     </DefaultLayout>
   );
 }

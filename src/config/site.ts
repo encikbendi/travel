@@ -2,31 +2,15 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Vite + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  description: "Travelling package planning and scheduling made easy.",
   navItems: [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "Docs",
-      href: "/docs",
-    },
-    {
-      label: "Pricing",
-      href: "/pricing",
-    },
-    {
-      label: "Blog",
-      href: "/blog",
-    },
-    {
-      label: "About",
-      href: "/about",
-    },
     {
       label: "Schedule",
       href: "/schedule",
+    },
+    {
+      label: "Packages",
+      href: "/packages",
     },
   ],
   navMenuItems: [
@@ -63,11 +47,4 @@ export const siteConfig = {
       href: "/logout",
     },
   ],
-  links: {
-    github: "https://github.com/frontio-ai/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
 };
