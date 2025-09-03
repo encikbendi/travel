@@ -51,8 +51,8 @@ export default function SchedulePage() {
         price: pkg.price,
         place: pkg.place,
         numberOfDays: pkg.numberOfDays,
-        startDate: dateRange.startDate.toLocaleDateString(),
-        endDate: dateRange.endDate.toLocaleDateString(),
+        startDate: dateRange.startDate.getTime(),
+        endDate: dateRange.endDate.getTime(),
         schedule: pkg.template,
       },
     ]);

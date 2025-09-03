@@ -130,7 +130,7 @@ export default function ScheduleTable({
   }
 
   function timeFormatter(date: TimeInputValue) {
-    const str = `${date.hour}:${date.minute} ${date.hour >= 12 ? "PM" : "AM"}`;
+    const str = `${date.hour % 12 || 12}:${date.minute} ${date.hour >= 12 ? "PM" : "AM"}`;
 
     return str;
   }
@@ -181,7 +181,6 @@ export default function ScheduleTable({
               <TimeInput
                 ref={timeInputRef}
                 granularity="minute"
-                label="Select Date"
                 onChange={(v) =>
                   setNewEntry({
                     ...newEntry,

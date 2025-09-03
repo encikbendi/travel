@@ -12,6 +12,10 @@ export const siteConfig = {
       label: "Packages",
       href: "/packages",
     },
+    {
+      label: "Participants",
+      href: "/participants",
+    },
   ],
   navMenuItems: [
     {
