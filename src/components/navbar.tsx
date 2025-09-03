@@ -54,7 +54,7 @@ export const Navbar = () => {
           </Link>
         </NavbarBrand>
         <div className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
+          {siteConfig.agentItems.map((item) => (
             <NavbarItem key={item.href}>
               <Link
                 className={clsx(
@@ -89,19 +89,23 @@ export const Navbar = () => {
       <NavbarMenu>
         {searchInput}
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
+          <p className="text-md text-default-500">Agent Menu</p>
+          <hr className="my-1 border-t border-default-200" />
+          {siteConfig.agentItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
+              <Link color="foreground" href={item.href} size="md">
+                {item.label}
+              </Link>
+            </NavbarMenuItem>
+          ))}
+        </div>
+
+        <div className="mx-4 mt-2 flex flex-col gap-2">
+          <p className="text-md text-default-500">Participant Menu</p>
+          <hr className="my-1 border-t border-default-200" />
+          {siteConfig.participantItems.map((item, index) => (
+            <NavbarMenuItem key={`${item}-${index}`}>
+              <Link color="foreground" href={item.href} size="md">
                 {item.label}
               </Link>
             </NavbarMenuItem>

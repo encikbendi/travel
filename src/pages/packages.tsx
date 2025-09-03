@@ -320,7 +320,7 @@ export default function PackagesPage() {
       </Modal>
 
       {selectedPackage !== null ? (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
             <h2>{selectedPackage.id > -1 ? "Edit Package" : "New Package"}</h2>
             <Input

@@ -93,20 +93,25 @@ export default function SchedulePage() {
         </ModalContent>
       </Modal>
       <Accordion variant="splitted">
-        {data.map((item) => (
-          <AccordionItem
-            key={item.id}
-            subtitle={`${new Date(item.startDate).toLocaleDateString("en-MY")} to ${new Date(item.endDate).toLocaleDateString("en-MY")}`}
-            title={item.title}
-          >
-            <ScheduleTable
+        {data
+          .sort(
+            (a, b) =>
+              new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
+          )
+          .map((item) => (
+            <AccordionItem
               key={item.id}
-              data={data}
-              item={item}
-              setData={setData}
-            />
-          </AccordionItem>
-        ))}
+              subtitle={`${new Date(item.startDate).toLocaleDateString("en-MY")} to ${new Date(item.endDate).toLocaleDateString("en-MY")}`}
+              title={item.title}
+            >
+              <ScheduleTable
+                key={item.id}
+                data={data}
+                item={item}
+                setData={setData}
+              />
+            </AccordionItem>
+          ))}
       </Accordion>
     </DefaultLayout>
   );

@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
   name: "Vite + HeroUI",
   description: "Travelling package planning and scheduling made easy.",
-  navItems: [
+  agentItems: [
     {
       label: "Packages",
       href: "/packages",
@@ -17,38 +17,18 @@ export const siteConfig = {
       href: "/participants",
     },
   ],
-  navMenuItems: [
+  participantItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: "Packages",
+      href: "/packages",
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "Schedule",
+      href: "/schedule",
     },
     {
-      label: "Projects",
-      href: "/projects",
-    },
-    {
-      label: "Team",
-      href: "/team",
-    },
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
+      label: "Participants",
+      href: "/participants",
     },
   ],
 };
