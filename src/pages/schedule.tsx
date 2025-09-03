@@ -10,6 +10,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@heroui/modal";
+import { Link } from "@heroui/link";
 
 import DefaultLayout from "@/layouts/default";
 import { Schedule, schedulesData } from "@/data/schedules";
@@ -110,6 +111,13 @@ export default function SchedulePage() {
                 item={item}
                 setData={setData}
               />
+              <div className="flex justify-end mb-4">
+                <Link href={`/schedules/${item.id}/participants`}>
+                  <Button variant="flat" onPress={() => {}}>
+                    Manage Participants
+                  </Button>
+                </Link>
+              </div>
             </AccordionItem>
           ))}
       </Accordion>

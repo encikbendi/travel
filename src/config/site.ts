@@ -16,19 +16,23 @@ export const siteConfig = {
       label: "Participants",
       href: "/participants",
     },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
   ],
   participantItems: [
     {
-      label: "Packages",
-      href: "/packages",
+      label: "My Trips",
+      href: "/trips",
     },
     {
-      label: "Schedule",
-      href: "/schedule",
+      label: "Attractions Nearby",
+      href: "/attractions",
     },
     {
-      label: "Participants",
-      href: "/participants",
+      label: "Tips & Guides",
+      href: "/guides",
     },
   ],
 };

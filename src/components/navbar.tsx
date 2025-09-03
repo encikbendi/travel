@@ -89,7 +89,7 @@ export const Navbar = () => {
       <NavbarMenu>
         {searchInput}
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          <p className="text-md text-default-500">Agent Menu</p>
+          <p className="text-md text-default-500">Agent</p>
           <hr className="my-1 border-t border-default-200" />
           {siteConfig.agentItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
@@ -101,7 +101,7 @@ export const Navbar = () => {
         </div>
 
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          <p className="text-md text-default-500">Participant Menu</p>
+          <p className="text-md text-default-500">Menu</p>
           <hr className="my-1 border-t border-default-200" />
           {siteConfig.participantItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
