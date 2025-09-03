@@ -135,24 +135,6 @@ export default function ScheduleTable({
     return str;
   }
 
-  function mapDay(date: Date, scheduleId: number) {
-    const schedule = data.find((s) => s.id === scheduleId);
-
-    if (!schedule) {
-      addToast({
-        title: "Schedule not found",
-        description: "The specified schedule could not be found.",
-        color: "danger",
-      });
-
-      return -1;
-    }
-
-    const diff = date.getTime() - new Date(schedule.startDate).getTime();
-
-    return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
-  }
-
   return (
     <>
       <div key={item.id} className="mb-2 text-lg flex gap-2">
