@@ -2,6 +2,7 @@ import { DatePicker } from "@heroui/date-picker";
 import { useState } from "react";
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
+import { Accordion, AccordionItem } from "@heroui/accordion";
 import {
   Modal,
   ModalBody,
@@ -91,16 +92,22 @@ export default function SchedulePage() {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <>
+      <Accordion variant="splitted">
         {data.map((item) => (
-          <ScheduleTable
+          <AccordionItem
             key={item.id}
-            data={data}
-            item={item}
-            setData={setData}
-          />
+            subtitle={`${new Date(item.startDate).toLocaleDateString("en-MY")} to ${new Date(item.endDate).toLocaleDateString("en-MY")}`}
+            title={item.title}
+          >
+            <ScheduleTable
+              key={item.id}
+              data={data}
+              item={item}
+              setData={setData}
+            />
+          </AccordionItem>
         ))}
-      </>
+      </Accordion>
     </DefaultLayout>
   );
 }

@@ -5,12 +5,12 @@ export const siteConfig = {
   description: "Travelling package planning and scheduling made easy.",
   navItems: [
     {
-      label: "Schedule",
-      href: "/schedule",
-    },
-    {
       label: "Packages",
       href: "/packages",
+    },
+    {
+      label: "Schedule",
+      href: "/schedule",
     },
     {
       label: "Participants",
