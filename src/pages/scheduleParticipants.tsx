@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
@@ -23,6 +23,8 @@ import {
 
 export default function ScheduleParticipantsPage() {
   const { id } = useParams<{ id: string }>();
+
+  const { inputRef } = useRef<HTMLInputElement>(null);
 
   const schedule = schedulesData.find((s) => s.id === Number(id));
 
@@ -94,7 +96,8 @@ export default function ScheduleParticipantsPage() {
   const filteredParticipants = availableParticipants.filter(
     (participant) =>
       participant.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-      participant.phone.toLowerCase().includes(searchValue.toLowerCase()),
+      participant.phone.toLowerCase().includes(searchValue.toLowerCase()) ||
+      participant.documentId.toLowerCase().includes(searchValue.toLowerCase()),
   );
 
   function removeParticipant(participantId: number) {
@@ -228,6 +231,7 @@ export default function ScheduleParticipantsPage() {
         <TableHeader>
           <TableColumn>Name</TableColumn>
           <TableColumn>Phone</TableColumn>
+          <TableColumn>Document ID</TableColumn>
           <TableColumn>Room Type</TableColumn>
           <TableColumn className="w-32">Room Number</TableColumn>
           <TableColumn>Actions</TableColumn>
@@ -238,14 +242,23 @@ export default function ScheduleParticipantsPage() {
               <TableRow key={participant.id}>
                 <TableCell>{participant.name}</TableCell>
                 <TableCell>{participant.phone}</TableCell>
+                <TableCell>{participant.documentId}</TableCell>
                 <TableCell>{getRoomType(participant.roomNo)}</TableCell>
                 <TableCell>
                   {editingRoomId === participant.id ? (
                     <div className="flex gap-2 items-center">
                       <Input
+                        ref={inputRef}
                         size="sm"
                         value={editingRoomValue}
                         onChange={(e) => setEditingRoomValue(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            saveRoomEdit(participant.id);
+                          } else if (e.key === "Escape") {
+                            cancelEditingRoom();
+                          }
+                        }}
                       />
                     </div>
                   ) : (
@@ -278,9 +291,9 @@ export default function ScheduleParticipantsPage() {
                       <Button
                         size="sm"
                         variant="flat"
-                        onPress={() =>
-                          startEditingRoom(participant.id, participant.roomNo)
-                        }
+                        onPress={() => {
+                          startEditingRoom(participant.id, participant.roomNo);
+                        }}
                       >
                         Edit Room
                       </Button>
@@ -327,7 +340,7 @@ export default function ScheduleParticipantsPage() {
 
               if (selectedParticipant) {
                 setSearchValue(
-                  `${selectedParticipant.name} - ${selectedParticipant.phone}`,
+                  `${selectedParticipant.name} - ${selectedParticipant.phone} - ${selectedParticipant.documentId}`,
                 );
               }
             }
@@ -335,7 +348,8 @@ export default function ScheduleParticipantsPage() {
         >
           {(participant) => (
             <AutocompleteItem key={participant.id}>
-              {participant.name} - {participant.phone}
+              {participant.name} - {participant.phone} -{" "}
+              {participant.documentId}
             </AutocompleteItem>
           )}
         </Autocomplete>
