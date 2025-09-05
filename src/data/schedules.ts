@@ -37,6 +37,13 @@ export const schedulesData: Schedule[] = [
         remarks: "Annual tech conference",
       },
       {
+        day: 1,
+        time: "12:00 PM",
+        event: "Networking Lunch",
+        place: "New York",
+        remarks: "Lunch with industry leaders",
+      },
+      {
         day: 2,
         time: "11:00 AM",
         event: "Workshop",
@@ -57,7 +64,7 @@ export const schedulesData: Schedule[] = [
     id: 2,
     packageId: 1,
     title: "Business Summit",
-    description: "A summit for business leaders and entrepreneurs",
+    description: "A summit for business leaders and entrepreneurs.",
     price: 3000,
     place: "Canada",
     numberOfDays: 2,
@@ -69,7 +76,8 @@ export const schedulesData: Schedule[] = [
         time: "09:00 AM",
         event: "Opening Ceremony",
         place: "Toronto",
-        remarks: "Inaugural session with keynote speakers",
+        remarks:
+          "Inaugural session with keynote speakers.  Long remarks to show the layout effect when there are multiple lines of text",
       },
       {
         day: 2,

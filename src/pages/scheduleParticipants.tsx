@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
@@ -23,8 +23,6 @@ import {
 
 export default function ScheduleParticipantsPage() {
   const { id } = useParams<{ id: string }>();
-
-  const { inputRef } = useRef<HTMLInputElement>(null);
 
   const schedule = schedulesData.find((s) => s.id === Number(id));
 
@@ -248,7 +246,6 @@ export default function ScheduleParticipantsPage() {
                   {editingRoomId === participant.id ? (
                     <div className="flex gap-2 items-center">
                       <Input
-                        ref={inputRef}
                         size="sm"
                         value={editingRoomValue}
                         onChange={(e) => setEditingRoomValue(e.target.value)}

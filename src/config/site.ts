@@ -16,23 +16,23 @@ export const siteConfig = {
       label: "Participants",
       href: "/participants",
     },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
+    // {
+    //   label: "Dashboard",
+    //   href: "/dashboard",
+    // },
   ],
   participantItems: [
     {
       label: "My Trips",
       href: "/trips",
     },
-    {
-      label: "Attractions Nearby",
-      href: "/attractions",
-    },
-    {
-      label: "Tips & Guides",
-      href: "/guides",
-    },
+    // {
+    //   label: "Attractions Nearby",
+    //   href: "/attractions",
+    // },
+    // {
+    //   label: "Tips & Guides",
+    //   href: "/guides",
+    // },
   ],
 };
